@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="assets/favicon.webp" type="image/x-icon" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="title">Calculator</div>
+      <div class="ui-toggle">
+        <i class="fa-solid fa-moon"></i>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="display">
+        <input type="text" id="inputCalc" disabled />
+        <div class="result"></div>
+      </div>
+      <div class="buttons">
+        <button data-value="" class="button second">2<sup>nd</sup></button>
+        <button data-value="π" class="button">π</button>
+        <button data-value="e" class="button">e</button>
+        <button data-value="clear" class="button">AC</button>
+        <button data-value="backspace" class="button">
+          <i class="fa-solid fa-delete-left"></i>
+        </button>
+        <button data-value="pow2" class="button">X<sup>2</sup></button>
+        <button data-value="sin" class="button secondary">sin</button>
+        <button data-value="arcsin" class="button secondary inactive">
+          sin<sup>-1</sup>
+        </button>
+        <button data-value="cos" class="button secondary">cos</button>
+        <button data-value="arccos" class="button secondary inactive">
+          cos<sup>-1</sup>
+        </button>
+        <button data-value="tan" class="button secondary">tan</button>
+        <button data-value="arctan" class="button secondary inactive">
+          tan<sup>-1</sup>
+        </button>
+        <button data-value="mod" class="button">mod</button>
+        <button data-value="√" class="button">√X</button>
+        <button data-value="(" class="button">(</button>
+        <button data-value=")" class="button">)</button>
+        <button data-value="!" class="button">n!</button>
+        <button data-value="÷" class="button">÷</button>
+        <button data-value="^" class="button">X<sup>y</sup></button>
+        <button data-value="7" class="button">7</button>
+        <button data-value="8" class="button">8</button>
+        <button data-value="9" class="button">9</button>
+        <button data-value="*" class="button">*</button>
+        <button data-value="powx" class="button">10<sup>x</sup></button>
+        <button data-value="4" class="button">4</button>
+        <button data-value="5" class="button">5</button>
+        <button data-value="6" class="button">6</button>
+        <button data-value="-" class="button">-</button>
+        <button data-value="log_10" class="button">log</button>
+        <button data-value="1" class="button">1</button>
+        <button data-value="2" class="button">2</button>
+        <button data-value="3" class="button">3</button>
+        <button data-value="+" class="button">+</button>
+        <button data-value="log" class="button">ln</button>
+        <button data-value="inv" class="button">1/X</button>
+        <button data-value="0" class="button">0</button>
+        <button data-value="." class="button">.</button>
+        <input type="button" value="=" class="calc" />
+      </div>
+      <div class="deg-rad">
+        <button class="degToRad">Degree</button>
+      </div>
+    </div>
+    <div class="history">
+      <div class="title">
+        <i class="fa-solid fa-clock-rotate-left"></i> History
+        <button class="hist-clear">clear</button>
+      </div>
+      <div class="history-container"></div>
+    </div>
+    <script type="module" src="/build/index.js"></script>
+  </body>
+</html>
