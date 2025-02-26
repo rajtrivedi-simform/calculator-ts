@@ -5,7 +5,7 @@ const degToRad = () => {
     let num = 0, charset = "";
     for (const ele of result.value) {
         if (parseInt(ele) >= 0 && parseInt(ele) <= 9) {
-            num = (num * 10) + parseInt(ele);
+            num = num * 10 + parseInt(ele);
         }
         else if (ele >= "a" && ele <= "z") {
             charset += ele;
@@ -68,22 +68,22 @@ const maniHistory = () => {
     const delBTN = document.querySelectorAll(".fa-trash");
     const addNodeBTN = document.querySelectorAll(".fa-plus");
     //event listeners for history block
-    addNodeBTN.forEach(element => {
-        element.addEventListener('click', (event) => {
+    addNodeBTN.forEach((element) => {
+        element.addEventListener("click", (event) => {
             const target = event.target;
             addNode(target);
         });
     });
-    delBTN.forEach(element => {
-        element.addEventListener('click', (event) => {
+    delBTN.forEach((element) => {
+        element.addEventListener("click", (event) => {
             const target = event.target;
             removeElement(target);
             maniHistory();
         });
     });
-    equationDiv.forEach(elemnt => elemnt.addEventListener("click", (event) => {
+    equationDiv.forEach((elemnt) => elemnt.addEventListener("click", (event) => {
         const target = event.target;
-        if (target.matches('.equation')) {
+        if (target.matches(".equation")) {
             // Check if the clicked element is a child of equationDiv
             loadtoinp(target);
         }
@@ -97,15 +97,24 @@ const loadtoinp = function (child) {
 const removeElement = (child) => {
     history = JSON.parse(localStorage.getItem("history"));
     let parent = child.parentNode.parentNode;
-    let equation = parent.querySelector(".equation").dataset.value;
+    let equation = parent.querySelector(".equation").dataset
+        .value;
     history.forEach((element) => {
         if (element.equation === equation) {
             history.splice(history.indexOf(element), 1);
+            // parent.classList.add("hide");
+            // parent.style.display = "none";
+            // console.log(parent)
         }
     });
     try {
         localStorage.setItem("history", JSON.stringify(history));
         alert("History removed");
+        const histHidden = document.querySelectorAll(".hide");
+        // const length = histHidden.length;
+        // for(let i =0 ; i< length; i++){
+        //   histHidden[i].style.display = "none";
+        // }
         loadHistory(history);
     }
     catch (error) {

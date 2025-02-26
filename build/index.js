@@ -24,6 +24,7 @@ const calculate = () => {
         const postfixArray = toPostfixArray(infixArray, infixArray.length);
         let result = evalPostfix(postfixArray);
         result = result == undefined ? eval(equation) : result;
+        3;
         toDom(result, equation);
     }
     catch (error) {

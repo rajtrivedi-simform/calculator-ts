@@ -5,7 +5,6 @@ const evalPostfix = (postfixArray) => {
     let result = 0;
     for (let i = 0; i < postfixArray.length; i++) {
         if (!isNaN(parseInt(postfixArray[i]))) {
-            console.log("Invoked");
             stack.push(parseFloat(postfixArray[i]));
         }
         else {

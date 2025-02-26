@@ -2,7 +2,8 @@ import { calculate } from "./index.js";
 import { literals, unaryOperatorsEvent } from "./constants.js";
 
 const eventListeners = () => {
-  const buttonsList: NodeListOf<HTMLElement> = document.querySelectorAll(".button");
+  const buttonsList: NodeListOf<HTMLElement> =
+    document.querySelectorAll(".button");
   const input = <HTMLInputElement>document.querySelector("input");
   const result = <HTMLElement>document.querySelector(".result");
   const history = <HTMLDivElement>document.querySelector(".history-container");
@@ -23,9 +24,8 @@ const eventListeners = () => {
     I.classList.add("fa-moon");
     document.querySelector("nav")!.style.color = "white";
     document.querySelector("nav")!.style.borderBottom = "5px solid white";
-  }//end 
+  } //end
 
-  
   const uiToggle = <HTMLElement>document.querySelector(".ui-toggle");
   const I = <HTMLElement>document.querySelector(".fa-moon");
 
@@ -52,7 +52,7 @@ const eventListeners = () => {
           case "powx":
             input.value += "10^";
             break;
-          case "backspace":
+          case "Delete":
             while (
               input.value.length > 0 &&
               input.value[input.value.length - 1].match(/[a-z(]/)
@@ -93,9 +93,20 @@ const eventListeners = () => {
     alert("History Cleared");
   });
 
-  document.addEventListener("keypress", (event) => {
+  document.addEventListener("keydown", (event) => {
     if (literals.includes(event.key)) {
       input.value += event.key == "/" ? "÷" : event.key;
+    } else if (event.key == "Backspace") {
+      while (input.value.length > 0 &&
+        input.value[input.value.length - 1].match(/[a-z(]/)
+      ) {
+        input.value = input.value.slice(0, -1);
+      }
+
+      if (input.value.length > 0) {
+        input.value = input.value.slice(0, -1);
+      }
+      result.innerHTML = "";
     } else if (event.key === "Enter") {
       calculate();
     }
