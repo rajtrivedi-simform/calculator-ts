@@ -75,9 +75,16 @@ const eventListeners = () => {
         });
     });
     histClearBtn.addEventListener("click", () => {
-        history.innerHTML = "";
-        localStorage.clear();
-        alert("History Cleared");
+        const historyStorage = JSON.parse(localStorage.getItem("history")) || [];
+        const items = document.querySelectorAll(".item");
+        if (historyStorage.length > 0 || items.length > 0) {
+            history.innerHTML = "";
+            localStorage.clear();
+            alert("History Cleared");
+        }
+        else {
+            alert("No history to clear");
+        }
     });
     document.addEventListener("keydown", (event) => {
         if (literals.includes(event.key)) {

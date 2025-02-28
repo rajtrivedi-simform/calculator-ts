@@ -1,7 +1,7 @@
 import { prec } from "./constants.js";
 const toPostfixArray = (input, max) => {
-    let stack = [];
-    let postfix = [];
+    const stack = [];
+    const postfix = [];
     let maxx = max;
     if (maxx > input.length || maxx < 0) {
         maxx = input.length;
@@ -31,8 +31,7 @@ const toPostfixArray = (input, max) => {
                     prec[token].precedence <= prec[stack[stack.length - 1]].precedence) ||
                     (prec[token].associativity === "right" &&
                         prec[token].precedence < prec[stack[stack.length - 1]].precedence))) {
-                let temp = stack.pop();
-                postfix.push(temp);
+                postfix.push(stack.pop());
             }
             stack.push(token);
         }
@@ -43,8 +42,7 @@ const toPostfixArray = (input, max) => {
             while (stack.length > 0 &&
                 stack[stack.length - 1] !== "(" &&
                 stack[stack.length - 1] !== "{") {
-                let temp = stack.pop();
-                postfix.push(temp);
+                postfix.push(stack.pop());
             }
             stack.pop();
             // If we encounter a closing parenthesis and the top of the stack is log_10, add it to postfix
@@ -57,8 +55,7 @@ const toPostfixArray = (input, max) => {
         }
     }
     while (stack.length > 0) {
-        let temp = stack.pop();
-        postfix.push(temp);
+        postfix.push(stack.pop());
     }
     return postfix;
 };
