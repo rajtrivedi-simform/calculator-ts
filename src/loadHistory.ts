@@ -4,12 +4,13 @@ import { histObj } from "./types.js";
 let history: Array<histObj> = [];
 
 const degToRad = () => {
-  let result = <HTMLInputElement> document.querySelector("#inputCalc");
-  let num: number = 0, charset: string = "";
+  let result = <HTMLInputElement>document.querySelector("#inputCalc");
+  let num: number = 0,
+    charset: string = "";
 
   for (const ele of result.value) {
     if (parseInt(ele) >= 0 && parseInt(ele) <= 9) {
-      num = (num * 10) + parseInt(ele);
+      num = num * 10 + parseInt(ele);
     } else if (ele >= "a" && ele <= "z") {
       charset += ele;
     }
@@ -24,7 +25,7 @@ const degToRad = () => {
 };
 
 const addNode = (child: HTMLElement) => {
-  child = <HTMLElement> child.parentNode!.parentNode;
+  child = <HTMLElement>child.parentNode!.parentNode;
   let eqn = child.querySelector(".equation")?.getAttribute("data-value") || "";
   history = JSON.parse(<string>localStorage.getItem("history")) || [];
   history.push({
@@ -42,11 +43,12 @@ const addNode = (child: HTMLElement) => {
 
 const fetchHistory = () => {
   try {
-    let data: Array<histObj> = JSON.parse(localStorage.getItem("history")!) ?? [];
+    let data: Array<histObj> =
+      JSON.parse(localStorage.getItem("history")!) ?? [];
     loadHistory(data);
     maniHistory();
   } catch (e) {
-    alert("Error fetching history:"+e);
+    alert("Error fetching history:" + e);
   }
 };
 
@@ -70,32 +72,33 @@ const loadHistory = (data: Array<histObj>) => {
 
 const maniHistory = () => {
   const equationDiv = document.querySelectorAll(".equation");
-  const delBTN = document.querySelectorAll(".fa-trash")
+  const delBTN = document.querySelectorAll(".fa-trash");
   const addNodeBTN = document.querySelectorAll(".fa-plus");
 
   //event listeners for history block
-  addNodeBTN.forEach(element => {
-    element.addEventListener('click', (event) => {
+  addNodeBTN.forEach((element) => {
+    element.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
       addNode(target);
     });
   });
-  delBTN.forEach(element => {
-    element.addEventListener('click', (event) => {
+  delBTN.forEach((element) => {
+    element.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
       removeElement(target);
-      maniHistory()
+      maniHistory();
     });
   });
-  equationDiv.forEach(elemnt => elemnt.addEventListener("click", (event: Event) => {
-    const target = <HTMLElement> event.target;
-    if (target.matches('.equation')) {
-      // Check if the clicked element is a child of equationDiv
-      loadtoinp(target);
-    }
-  }));
-
-}
+  equationDiv.forEach((elemnt) =>
+    elemnt.addEventListener("click", (event: Event) => {
+      const target = <HTMLElement>event.target;
+      if (target.matches(".equation")) {
+        // Check if the clicked element is a child of equationDiv
+        loadtoinp(target);
+      }
+    })
+  );
+};
 
 const loadtoinp = function (child: HTMLElement) {
   let equation = child.dataset.value;
@@ -107,25 +110,29 @@ const removeElement = (child: HTMLElement) => {
   history = JSON.parse(<string>localStorage.getItem("history"));
 
   let parent = <HTMLElement>child.parentNode!.parentNode;
-  let equation = (parent.querySelector(".equation") as HTMLElement)!.dataset.value;
-
-  history.forEach((element) => {
+  let equation = (parent.querySelector(".equation") as HTMLElement)!.dataset
+    .value;
+  history.forEach((element) => {    
     if (element.equation === equation) {
       history.splice(history.indexOf(element), 1);
+      // parent.classList.add("hide");
+      // parent.style.display = "none";
+      // console.log(parent)
     }
   });
 
   try {
     localStorage.setItem("history", JSON.stringify(history));
     alert("History removed");
+    const histHidden = document.querySelectorAll<HTMLElement>(".hide");
+    // const length = histHidden.length;
+    // for(let i =0 ; i< length; i++){
+    //   histHidden[i].style.display = "none";
+    // }
     loadHistory(history);
   } catch (error) {
     alert(error);
   }
 };
 
-export {
-  degToRad,
-  fetchHistory,
-  maniHistory
-}
+export { degToRad, fetchHistory, maniHistory };

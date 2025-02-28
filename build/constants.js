@@ -4,6 +4,7 @@ const prec = {
     "-": { precedence: 1, associativity: "left" },
     "*": { precedence: 2, associativity: "left" },
     "÷": { precedence: 2, associativity: "left" },
+    "%": { precedence: 2, associativity: "left" },
     "^": { precedence: 3, associativity: "right" },
     "√": { precedence: 4, associativity: "right" },
     "!": { precedence: 4, associativity: "right" },
@@ -58,6 +59,7 @@ const literals = [
     "-",
     "*",
     "/",
+    "%",
 ];
 const calc = new Calculator();
 //operators maps to evaluate postfix
@@ -82,7 +84,7 @@ const unaryOperations = {
     "!": (number) => calc.fact(number),
 };
 const constants = {
-    'π': () => calc.PI(),
-    'e': () => calc.e(),
+    π: () => calc.PI(),
+    e: () => calc.e(),
 };
-export { operation, binaryOperators, unaryOperators, unaryOperatorsEvent, literals, binaryOperations, unaryOperations, prec, constants, constantOperators };
+export { operation, binaryOperators, unaryOperators, unaryOperatorsEvent, literals, binaryOperations, unaryOperations, prec, constants, constantOperators, };

@@ -6,6 +6,7 @@ const prec: obj = {
   "-": { precedence: 1, associativity: "left" },
   "*": { precedence: 2, associativity: "left" },
   "÷": { precedence: 2, associativity: "left" },
+  "%": { precedence: 2, associativity: "left" },
   "^": { precedence: 3, associativity: "right" },
   "√": { precedence: 4, associativity: "right" },
   "!": { precedence: 4, associativity: "right" },
@@ -63,6 +64,7 @@ const literals = [
   "-",
   "*",
   "/",
+  "%",
 ];
 
 const calc = new Calculator();
@@ -95,8 +97,8 @@ const unaryOperations: unaryObj = {
 };
 
 const constants: consObj = {
-  'π': (): number => calc.PI(),
-  'e': (): number => calc.e(),
+  π: (): number => calc.PI(),
+  e: (): number => calc.e(),
 };
 
 export {
@@ -109,5 +111,5 @@ export {
   unaryOperations,
   prec,
   constants,
-  constantOperators
+  constantOperators,
 };
