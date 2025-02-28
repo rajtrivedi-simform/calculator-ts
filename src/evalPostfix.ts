@@ -8,8 +8,10 @@ import {
   binaryOperators,
   constantOperators,
 } from "./constants.js";
+
+// Evaluate postfix expression and return the result.
 const evalPostfix = (postfixArray: string[]): number => {
-  let stack: Array<number> = [];
+  const stack: Array<number> = [];
   let result: number = 0;
 
   for (let i = 0; i < postfixArray.length; i++) {

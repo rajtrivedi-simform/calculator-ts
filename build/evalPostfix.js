@@ -1,7 +1,8 @@
 import { unaryCalculate, binaryCalculate, constantCalculate, } from "./calculate.js";
 import { unaryOperators, binaryOperators, constantOperators, } from "./constants.js";
+// Evaluate postfix expression and return the result.
 const evalPostfix = (postfixArray) => {
-    let stack = [];
+    const stack = [];
     let result = 0;
     for (let i = 0; i < postfixArray.length; i++) {
         if (!isNaN(parseInt(postfixArray[i]))) {

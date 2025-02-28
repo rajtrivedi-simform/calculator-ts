@@ -88,16 +88,23 @@ const eventListeners = () => {
   });
 
   histClearBtn.addEventListener("click", () => {
-    history.innerHTML = "";
-    localStorage.clear();
-    alert("History Cleared");
+    const historyStorage = JSON.parse(<string>localStorage.getItem("history")) || [];
+    const items = document.querySelectorAll(".item");
+    if (historyStorage.length > 0 || items.length > 0) {
+      history.innerHTML = "";
+      localStorage.clear();
+      alert("History Cleared");
+    } else {
+      alert("No history to clear");
+    }
   });
 
   document.addEventListener("keydown", (event) => {
     if (literals.includes(event.key)) {
       input.value += event.key == "/" ? "÷" : event.key;
     } else if (event.key == "Backspace") {
-      while (input.value.length > 0 &&
+      while (
+        input.value.length > 0 &&
         input.value[input.value.length - 1].match(/[a-z(]/)
       ) {
         input.value = input.value.slice(0, -1);

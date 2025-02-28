@@ -1,7 +1,6 @@
 import { operation } from "./constants.js";
-let history = [];
 const degToRad = () => {
-    let result = document.querySelector("#inputCalc");
+    const result = document.querySelector("#inputCalc");
     let num = 0, charset = "";
     for (const ele of result.value) {
         if (parseInt(ele) >= 0 && parseInt(ele) <= 9) {
@@ -18,28 +17,77 @@ const degToRad = () => {
         result.value = charset + "(" + radDeg(num) + ")";
     }
 };
+//History Portion
+// Add Node to History
 const addNode = (child) => {
     var _a, _b;
-    child = child.parentNode.parentNode;
-    let eqn = ((_a = child.querySelector(".equation")) === null || _a === void 0 ? void 0 : _a.getAttribute("data-value")) || "";
-    history = JSON.parse(localStorage.getItem("history")) || [];
-    history.push({
-        equation: eqn,
-        result: ((_b = child.querySelector(".result")) === null || _b === void 0 ? void 0 : _b.getAttribute("data-value")) || "",
-    });
-    try {
-        localStorage.setItem("history", JSON.stringify(history));
-        child.querySelector(".fa-plus").style.display = "none";
-        alert("History added");
+    const parent = child.parentNode.parentNode;
+    const eqn = ((_a = parent.querySelector(".equation")) === null || _a === void 0 ? void 0 : _a.getAttribute("data-value")) || "";
+    const res = ((_b = parent.querySelector(".result")) === null || _b === void 0 ? void 0 : _b.getAttribute("data-value")) || "";
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+    if (existHistory(eqn, res) && history.length > 0) {
+        alert("History already exists!");
     }
-    catch (e) {
-        alert("Error adding history" + e);
+    else {
+        history.push({ equation: eqn, result: res });
+        try {
+            localStorage.setItem("history", JSON.stringify(history));
+            child.remove();
+            alert("History Added!");
+        }
+        catch (e) {
+            alert("Error saving history:" + e);
+        }
     }
 };
+// Remove Node from history
+const removeElement = (child) => {
+    var _a, _b;
+    const parent = child.parentNode.parentNode;
+    const equation = ((_a = parent.querySelector(".equation")) === null || _a === void 0 ? void 0 : _a.getAttribute("data-value")) || "";
+    const result = ((_b = parent.querySelector(".result")) === null || _b === void 0 ? void 0 : _b.getAttribute("data-value")) || "";
+    if (existHistory(equation, result)) {
+        const history = JSON.parse(localStorage.getItem("history"));
+        history.forEach((obj) => {
+            if (obj.equation == equation && obj.result == result) {
+                history.splice(history.indexOf(obj), 1);
+                parent.remove();
+            }
+        });
+        try {
+            localStorage.setItem("history", JSON.stringify(history));
+            alert("History Removed!");
+        }
+        catch (e) {
+            alert("Error removing history:" + e);
+        }
+    }
+    else {
+        parent.remove();
+    }
+};
+// Load input to display from history node
+const loadtoinp = function (child) {
+    const equation = child.dataset.value;
+    const input = document.querySelector("#inputCalc");
+    input.value += equation !== null && equation !== void 0 ? equation : "";
+};
+const existHistory = (eqn, res, count = 0) => {
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+    if (history.length > 0) {
+        history.forEach((obj) => {
+            if (obj.equation == eqn && obj.result == res) {
+                count++;
+            }
+        });
+    }
+    return count > 0 ? true : false;
+};
+// Fetch and Load History
 const fetchHistory = () => {
     var _a;
     try {
-        let data = (_a = JSON.parse(localStorage.getItem("history"))) !== null && _a !== void 0 ? _a : [];
+        const data = (_a = JSON.parse(localStorage.getItem("history"))) !== null && _a !== void 0 ? _a : [];
         loadHistory(data);
         maniHistory();
     }
@@ -63,6 +111,7 @@ const loadHistory = (data) => {
     });
     historyContainer.innerHTML = html;
 };
+//event handlers to manipulate history
 const maniHistory = () => {
     const equationDiv = document.querySelectorAll(".equation");
     const delBTN = document.querySelectorAll(".fa-trash");
@@ -84,41 +133,8 @@ const maniHistory = () => {
     equationDiv.forEach((elemnt) => elemnt.addEventListener("click", (event) => {
         const target = event.target;
         if (target.matches(".equation")) {
-            // Check if the clicked element is a child of equationDiv
             loadtoinp(target);
         }
     }));
 };
-const loadtoinp = function (child) {
-    let equation = child.dataset.value;
-    let input = document.querySelector("#inputCalc");
-    input.value = equation !== null && equation !== void 0 ? equation : "";
-};
-const removeElement = (child) => {
-    history = JSON.parse(localStorage.getItem("history"));
-    let parent = child.parentNode.parentNode;
-    let equation = parent.querySelector(".equation").dataset
-        .value;
-    history.forEach((element) => {
-        if (element.equation === equation) {
-            history.splice(history.indexOf(element), 1);
-            // parent.classList.add("hide");
-            // parent.style.display = "none";
-            // console.log(parent)
-        }
-    });
-    try {
-        localStorage.setItem("history", JSON.stringify(history));
-        alert("History removed");
-        const histHidden = document.querySelectorAll(".hide");
-        // const length = histHidden.length;
-        // for(let i =0 ; i< length; i++){
-        //   histHidden[i].style.display = "none";
-        // }
-        loadHistory(history);
-    }
-    catch (error) {
-        alert(error);
-    }
-};
-export { degToRad, fetchHistory, maniHistory };
+export { degToRad, fetchHistory, maniHistory, existHistory };
